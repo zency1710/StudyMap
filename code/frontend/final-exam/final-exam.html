@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyMap - Final Exam</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../common/common.css">
+    <link rel="stylesheet" href="final-exam.css">
+</head>
+
+<body>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div class="auth-mobile-logo-icon"
+                style="width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; background: var(--gradient-primary); border-radius: 0.5rem; color: white;">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#graduation-cap"></use>
+                </svg>
+            </div>
+            <span style="font-weight: 700;">StudyMap</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button class="theme-toggle-btn" id="header-theme-toggle-mobile">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#moon"></use>
+                </svg>
+            </button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#menu"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
+                    <div class="sidebar-logo-icon">
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#graduation-cap"></use>
+                        </svg>
+                    </div>
+                    <span class="sidebar-logo-text">StudyMap</span>
+                </div>
+                <button class="theme-toggle-btn desktop-only" id="header-theme-toggle">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#moon"></use>
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="../dashboard/dashboard.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#home"></use>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../upload/upload.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#upload"></use>
+                    </svg>
+                    <span>Upload PDF</span>
+                </a>
+                <a href="../syllabus/syllabus.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#book-open"></use>
+                    </svg>
+                    <span>Syllabus</span>
+                </a>
+                <a href="../streaks/streaks.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#flame"></use>
+                    </svg>
+                    <span>Streaks</span>
+                </a>
+                <a href="../final-exam/final-exam.html" class="sidebar-nav-item active">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#trophy"></use>
+                    </svg>
+                    <span>Final Exam</span>
+                </a>
+                <a href="../analytics/analytics.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#bar-chart"></use>
+                    </svg>
+                    <span>Analytics</span>
+                </a>
+                <a href="../settings/settings.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#settings"></use>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="sidebar-user-avatar">U</div>
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name">User Name</div>
+                        <div class="sidebar-user-email">user@example.com</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="context-banner-container"></div>
+            <div class="final-exam-container">
+
+                <!-- Locked View -->
+                <div id="exam-locked" class="glass-card final-exam-locked animate-scale-in hidden">
+                    <div class="final-exam-locked-icon">
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#lock"></use>
+                        </svg>
+                    </div>
+
+                    <h1>Final Exam Locked</h1>
+                    <p class="final-exam-locked-subtitle">Complete all topics to unlock the final exam</p>
+
+                    <div class="final-exam-locked-progress">
+                        <div class="final-exam-locked-progress-header">
+                            <span class="text-muted-foreground">Progress</span>
+                            <span style="font-weight: 500;" id="locked-progress-text">0/0 topics</span>
+                        </div>
+                        <div class="progress-bar progress-bar-primary" style="height: 0.5rem;">
+                            <div class="progress-bar-fill" id="locked-progress-fill"
+                                style="width: 0%; background: var(--primary);"></div>
+                        </div>
+                    </div>
+
+                    <div class="final-exam-locked-remaining">
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#alert-circle"></use>
+                        </svg>
+                        <span id="locked-remaining-text">0 topics remaining</span>
+                    </div>
+
+                    <button class="btn btn-gradient" id="continue-learning-btn">
+                        Continue Learning
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#arrow-right"></use>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Start View -->
+                <div id="exam-start" class="glass-card final-exam-start animate-scale-in hidden">
+                    <div class="final-exam-start-icon">
+                        <span style="color: white;">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#trophy"></use>
+                            </svg>
+                        </span>
+                    </div>
+
+                    <h1>Final Mock Exam</h1>
+                    <p class="final-exam-start-subtitle">Test your knowledge across all subjects</p>
+
+                    <div class="final-exam-stats">
+                        <div class="final-exam-stat">
+                            <p class="final-exam-stat-value">50</p>
+                            <p class="final-exam-stat-label">Questions</p>
+                        </div>
+                        <div class="final-exam-stat">
+                            <p class="final-exam-stat-value">60 min</p>
+                            <p class="final-exam-stat-label">Time Limit</p>
+                        </div>
+                    </div>
+
+                    <div class="final-exam-warning">
+                        <div class="final-exam-warning-header">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#alert-circle"></use>
+                            </svg>
+                            <span>Important</span>
+                        </div>
+                        <p class="final-exam-warning-text">
+                            • Cover all subjects from your syllabus<br>
+                            • You can navigate between questions<br>
+                            • Timer will auto-submit when it ends
+                        </p>
+                    </div>
+
+                    <button class="btn btn-gradient btn-lg" id="start-exam-btn" style="padding: 1rem 2rem;">
+                        Start Final Exam
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#arrow-right"></use>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Result View -->
+                <div id="exam-result" class="glass-card final-exam-start animate-scale-in hidden">
+                    <div class="final-exam-start-icon" id="result-icon-container">
+                        <span id="result-icon">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#trophy"></use>
+                            </svg>
+                        </span>
+                    </div>
+
+                    <h1>Previous Result</h1>
+                    <p class="final-exam-start-subtitle">You've already taken the final exam</p>
+
+                    <div id="result-score" style="font-size: 3.75rem; font-weight: 700; margin-bottom: 1.5rem;">
+                        0%
+                    </div>
+
+                    <div class="test-result-actions">
+                        <button class="btn btn-outline" id="back-dashboard-btn">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#home"></use>
+                            </svg>
+                            Dashboard
+                        </button>
+                        <button class="btn btn-gradient" id="retake-exam-btn">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#rotate-ccw"></use>
+                            </svg>
+                            Retake Exam
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="../common/config.js"></script>
+    <script src="../common/api.js"></script>
+    <script src="../common/common.js"></script>
+    <script src="final-exam.js"></script>
+</body>
+
+</html>

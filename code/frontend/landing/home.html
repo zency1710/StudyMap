@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StudyMap — AI-Powered Curriculum Mastery</title>
+  <meta name="description"
+    content="Upload your syllabus, get AI-generated study plans, practice with smart tests, and track every step of your progress." />
+  <link rel="stylesheet" href="landing.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <div class="logo">
+        <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+          <path d="M22 10v6" />
+          <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+        </svg>
+        <span class="logo-text">StudyMap</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#stats">Results</a>
+        <a href="#testimonials">Reviews</a>
+      </nav>
+      <div style="display: flex; align-items: center;">
+        <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle theme">
+          <svg width="20" height="20">
+            <use href="../assets/icons.svg#moon"></use>
+          </svg>
+        </button>
+        <button class="btn btn-primary btn-sm" id="navCta">Get Started</button>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="3" y1="6" x2="21" y2="6" />
+            <line x1="3" y1="12" x2="21" y2="12" />
+            <line x1="3" y1="18" x2="21" y2="18" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#features">Features</a>
+      <a href="#stats">Results</a>
+      <a href="#testimonials">Reviews</a>
+      <button class="btn btn-primary" id="mobileCta">Get Started</button>
+    </div>
+  </header>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="container hero-inner">
+      <div class="badge animate-fade-in">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+        </svg>
+        AI-Powered Learning Platform
+      </div>
+      <h1 class="hero-title animate-slide-up">
+        Master Your Curriculum<br />
+        <span class="gradient-text">With Confidence</span>
+      </h1>
+      <p class="hero-subtitle animate-slide-up delay-1">
+        Upload your syllabus, get AI-generated study plans, practice with smart tests,
+        and track every step of your progress — all in one place.
+      </p>
+      <div class="hero-actions animate-slide-up delay-2">
+        <button class="btn btn-primary btn-lg" id="heroCta">
+          Start Free
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </button>
+        <a href="#features" class="btn btn-outline btn-lg">See How It Works</a>
+      </div>
+    </div>
+  </section>
+  <!-- Stats -->
+  <section id="stats" class="stats-section">
+    <div class="container stats-grid">
+      <div class="stat-item animate-slide-up delay-0">
+        <p class="stat-value">10K+</p>
+        <p class="stat-label">Active Students</p>
+      </div>
+      <div class="stat-item animate-slide-up delay-1">
+        <p class="stat-value">500K+</p>
+        <p class="stat-label">Questions Answered</p>
+      </div>
+      <div class="stat-item animate-slide-up delay-2">
+        <p class="stat-value">95%</p>
+        <p class="stat-label">Pass Rate</p>
+      </div>
+      <div class="stat-item animate-slide-up delay-3">
+        <p class="stat-value">4.9★</p>
+        <p class="stat-label">User Rating</p>
+      </div>
+    </div>
+  </section>
+  <!-- Features -->
+  <section id="features" class="features-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Everything You Need to <span class="gradient-text">Succeed</span></h2>
+        <p>Powerful tools designed to transform how you study.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card animate-slide-up delay-0">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="17 8 12 3 7 8" />
+              <line x1="12" y1="3" x2="12" y2="15" />
+            </svg>
+          </div>
+          <h3>Upload Your Syllabus</h3>
+          <p>Drop your curriculum PDF and let AI break it into smart, trackable topics.</p>
+        </div>
+        <div class="feature-card animate-slide-up delay-1">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path
+                d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z" />
+              <path
+                d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z" />
+            </svg>
+          </div>
+          <h3>AI-Generated Tests</h3>
+          <p>Practice with auto-generated MCQs tailored to your weak areas.</p>
+        </div>
+        <div class="feature-card animate-slide-up delay-2">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10" />
+              <line x1="12" y1="20" x2="12" y2="4" />
+              <line x1="6" y1="20" x2="6" y2="14" />
+            </svg>
+          </div>
+          <h3>Deep Analytics</h3>
+          <p>Track progress with heatmaps, trend lines, and subject breakdowns.</p>
+        </div>
+        <div class="feature-card animate-slide-up delay-3">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </div>
+          <h3>Mock Exams</h3>
+          <p>Simulate real exam conditions with timed, full-length practice tests.</p>
+        </div>
+        <div class="feature-card animate-slide-up delay-4">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+            </svg>
+          </div>
+          <h3>Smart Curriculum</h3>
+          <p>Organized topics with progress tracking and verification badges.</p>
+        </div>
+        <div class="feature-card animate-slide-up delay-5">
+          <div class="feature-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+            </svg>
+          </div>
+          <h3>Streak & Motivation</h3>
+          <p>Stay consistent with daily streaks, goals, and achievement rewards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Testimonials -->
+  <section id="testimonials" class="testimonials-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Loved by <span class="gradient-text">Students</span></h2>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card animate-slide-up delay-0">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"StudyMap turned my chaotic syllabus into a clear roadmap. I passed my boards on
+            the first try!"</p>
+          <div class="testimonial-author"><strong>Priya S.</strong><span>Medical Student</span></div>
+        </div>
+        <div class="testimonial-card animate-slide-up delay-1">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"The AI-generated tests found gaps I didn't know I had. My grades improved by two
+            letter grades."</p>
+          <div class="testimonial-author"><strong>James R.</strong><span>Engineering Major</span></div>
+        </div>
+        <div class="testimonial-card animate-slide-up delay-2">
+          <div class="stars">★★★★★</div>
+          <p class="testimonial-text">"The analytics dashboard keeps me accountable. I've maintained a 45-day study
+            streak!"</p>
+          <div class="testimonial-author"><strong>Aisha K.</strong><span>Law Student</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-card">
+        <h2>Ready to <span class="gradient-text">Ace Your Exams</span>?</h2>
+        <p>Join thousands of students using StudyMap to study smarter, not harder.</p>
+        <button class="btn btn-primary btn-lg" id="ctaBtn">
+          Get Started — It's Free
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="logo">
+        <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path
+            d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z" />
+          <path d="M22 10v6" />
+          <path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5" />
+        </svg>
+        <span class="logo-text">StudyMap</span>
+      </div>
+      <p class="copyright">© 2026 StudyMap. All rights reserved.</p>
+    </div>
+  </footer>
+  <script src="../common/common.js"></script>
+  <script src="landing.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize theme from State (common.js)
+      State.load();
+
+      const themeToggleBtn = document.getElementById('theme-toggle');
+      if (themeToggleBtn) {
+        const iconUse = themeToggleBtn.querySelector('use');
+
+        const updateIcon = () => {
+          const isDark = document.documentElement.classList.contains('dark');
+          iconUse.setAttribute('href', `../assets/icons.svg#${isDark ? 'sun' : 'moon'}`);
+        };
+
+        // Initial icon update
+        updateIcon();
+
+        themeToggleBtn.addEventListener('click', () => {
+          State.toggleTheme();
+          updateIcon();
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

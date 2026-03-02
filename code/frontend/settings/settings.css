@@ -1,0 +1,80 @@
+/* ================================
+   SETTINGS PAGE
+================================ */
+.settings-container {
+    max-width: 42rem;
+    margin: 0 auto;
+}
+
+.settings-header {
+    margin-bottom: 2rem;
+}
+
+.settings-header h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.settings-header p {
+    color: var(--muted-foreground);
+}
+
+.settings-section {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.settings-section h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.settings-theme {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.settings-theme-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.settings-theme-icon {
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    background: var(--primary-soft-10);
+    color: var(--primary);
+}
+
+.settings-theme-title {
+    font-weight: 500;
+}
+
+.settings-theme-subtitle {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+.settings-theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.settings-form-group {
+    margin-bottom: 1.25rem;
+}
+
+.settings-danger {
+    border-color: hsla(0, 84%, 60%, 0.2);
+}
+
+.settings-danger p {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    margin-bottom: 1rem;
+}

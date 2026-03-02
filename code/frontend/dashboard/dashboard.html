@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyMap - Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../common/common.css">
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div class="auth-mobile-logo-icon"
+                style="width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; background: var(--gradient-primary); border-radius: 0.5rem; color: white;">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#graduation-cap"></use>
+                </svg>
+            </div>
+            <span style="font-weight: 700;">StudyMap</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button class="theme-toggle-btn" id="header-theme-toggle-mobile">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#moon"></use>
+                </svg>
+            </button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#menu"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
+                    <div class="sidebar-logo-icon">
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#graduation-cap"></use>
+                        </svg>
+                    </div>
+                    <span class="sidebar-logo-text">StudyMap</span>
+                </div>
+                <button class="theme-toggle-btn desktop-only" id="header-theme-toggle">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#moon"></use>
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="../dashboard/dashboard.html" class="sidebar-nav-item active">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#home"></use>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../upload/upload.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#upload"></use>
+                    </svg>
+                    <span>Upload PDF</span>
+                </a>
+                <a href="../syllabus/syllabus.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#book-open"></use>
+                    </svg>
+                    <span>Syllabus</span>
+                </a>
+                <a href="../streaks/streaks.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#flame"></use>
+                    </svg>
+                    <span>Streaks</span>
+                </a>
+                <a href="../final-exam/final-exam.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#trophy"></use>
+                    </svg>
+                    <span>Final Exam</span>
+                </a>
+                <a href="../analytics/analytics.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#bar-chart"></use>
+                    </svg>
+                    <span>Analytics</span>
+                </a>
+                <a href="../settings/settings.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#settings"></use>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="sidebar-user-avatar">U</div>
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name">User Name</div>
+                        <div class="sidebar-user-email">user@example.com</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="context-banner-container"></div>
+            <div style="display: flex; flex-direction: column; gap: 2rem;">
+                <!-- Header -->
+                <div class="dashboard-header animate-slide-up">
+                    <div class="dashboard-greeting">
+                        <h1 id="welcome-message">Welcome back, Student!</h1>
+                        <p id="welcome-subtitle">Keep up the great work on your learning journey!</p>
+                    </div>
+                    <div class="dashboard-actions">
+                        <button class="btn btn-outline btn-lg" onclick="window.location.href='../upload/upload.html'">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#upload"></use>
+                            </svg>
+                            Upload PDF
+                        </button>
+                        <button class="btn btn-gradient btn-lg"
+                            onclick="window.location.href='../syllabus/syllabus.html'">
+                            Continue Study
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#arrow-right"></use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Main Progress Card -->
+                <div class="glass-card dashboard-progress-card animate-slide-up delay-1">
+                    <div class="dashboard-progress-content">
+                        <!-- Progress Ring Container -->
+                        <div id="progress-ring-container">
+                            <!-- SVG injected by JS or Static with ID -->
+                            <div class="progress-ring" style="width: 180px; height: 180px;">
+                                <svg width="180" height="180">
+                                    <circle cx="90" cy="90" r="83" fill="none" stroke="currentColor" stroke-width="14"
+                                        class="ring-bg" />
+                                    <circle cx="90" cy="90" r="83" fill="none" stroke="currentColor" stroke-width="14"
+                                        stroke-dasharray="521.5" stroke-dashoffset="521.5" stroke-linecap="round"
+                                        class="ring-fill success" id="progress-ring-circle" />
+                                </svg>
+                                <div class="progress-ring-label">
+                                    <span class="progress-ring-value text-success" id="progress-percentage">0%</span>
+                                    <span class="progress-ring-text">Complete</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-progress-info">
+                            <h2 class="dashboard-progress-title">Syllabus Progress</h2>
+                            <p class="dashboard-progress-subtitle" id="syllabus-name">No syllabus uploaded yet</p>
+
+                            <div class="dashboard-progress-stats">
+                                <div class="dashboard-progress-stat">
+                                    <p class="dashboard-progress-stat-value" id="stat-topics">0</p>
+                                    <p class="dashboard-progress-stat-label">Topics</p>
+                                </div>
+                                <div class="dashboard-progress-stat success">
+                                    <p class="dashboard-progress-stat-value text-success" id="stat-verified">0</p>
+                                    <p class="dashboard-progress-stat-label">Verified</p>
+                                </div>
+                                <div class="dashboard-progress-stat warning">
+                                    <p class="dashboard-progress-stat-value text-warning" id="stat-pending">0</p>
+                                    <p class="dashboard-progress-stat-label">Pending</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <div
+                                    style="display: flex; justify-content: space-between; font-size: 0.875rem; margin-bottom: 0.5rem;">
+                                    <span class="text-muted-foreground">Overall Progress</span>
+                                    <span style="font-weight: 500;" id="progress-text">0%</span>
+                                </div>
+                                <div class="progress-bar" style="height: 0.75rem;">
+                                    <div class="progress-bar-fill" id="progress-bar-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PDF Management Section -->
+                <div class="pdf-management-section animate-slide-up delay-2">
+                    <div class="section-header">
+                        <div style="display: flex; align-items: center; gap: 0.75rem;">
+                            <div class="section-icon">
+                                <svg class="icon">
+                                    <use href="../assets/icons.svg#book-open"></use>
+                                </svg>
+                            </div>
+                            <div>
+                                <h2 class="section-title">My Syllabi</h2>
+                                <p class="section-subtitle">Manage your uploaded PDFs and study materials</p>
+                            </div>
+                        </div>
+                        <button class="btn btn-outline btn-sm" onclick="window.location.href='../upload/upload.html'">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#plus"></use>
+                            </svg>
+                            Add New
+                        </button>
+                    </div>
+
+                    <div class="pdf-grid" id="pdf-list-container">
+                        <!-- PDF Cards will be injected here -->
+                        <div class="pdf-loading">
+                            <div class="pulse-animation" style="width: 100%; height: 120px; border-radius: 1rem;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="glass-card quick-actions animate-slide-up delay-2">
+                    <h3>Quick Actions</h3>
+
+                    <button class="quick-action-item" onclick="window.location.href='../upload/upload.html'">
+                        <div class="quick-action-icon primary">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#upload"></use>
+                            </svg>
+                        </div>
+                        <div class="quick-action-content">
+                            <p class="quick-action-title">Upload New PDF</p>
+                            <p class="quick-action-subtitle">Add a new syllabus to track</p>
+                        </div>
+                        <span class="quick-action-arrow">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#arrow-right"></use>
+                            </svg>
+                        </span>
+                    </button>
+
+                    <button class="quick-action-item" onclick="window.location.href='../syllabus/syllabus.html'">
+                        <div class="quick-action-icon success">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#book-open"></use>
+                            </svg>
+                        </div>
+                        <div class="quick-action-content">
+                            <p class="quick-action-title">Continue Learning</p>
+                            <p class="quick-action-subtitle">Resume where you left off</p>
+                        </div>
+                        <span class="quick-action-arrow">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#arrow-right"></use>
+                            </svg>
+                        </span>
+                    </button>
+
+                    <button class="quick-action-item" onclick="window.location.href='../analytics/analytics.html'">
+                        <div class="quick-action-icon warning">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#sparkles"></use>
+                            </svg>
+                        </div>
+                        <div class="quick-action-content">
+                            <p class="quick-action-title">View Analytics</p>
+                            <p class="quick-action-subtitle">Track your performance</p>
+                        </div>
+                        <span class="quick-action-arrow">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#arrow-right"></use>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast Container (Static or Dynamic?) -->
+    <!-- If Toast creates it dynamically, it's fine. -->
+
+    <script src="../common/config.js"></script>
+    <script src="../common/api.js"></script>
+    <script src="../common/common.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyMap - Admin Panel</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../common/common.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div class="auth-mobile-logo-icon"
+                style="width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; background: var(--gradient-primary); border-radius: 0.5rem; color: white;">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#graduation-cap"></use>
+                </svg>
+            </div>
+            <span style="font-weight: 700;">StudyMap</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button class="theme-toggle-btn" id="header-theme-toggle-mobile">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#moon"></use>
+                </svg>
+            </button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#menu"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
+                    <div class="sidebar-logo-icon">
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#graduation-cap"></use>
+                        </svg>
+                    </div>
+                    <span class="sidebar-logo-text">StudyMap</span>
+                </div>
+                <button class="theme-toggle-btn desktop-only" id="header-theme-toggle">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#moon"></use>
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="../admin/admin.html" class="sidebar-nav-item active">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#shield"></use>
+                    </svg>
+                    <span>Admin</span>
+                </a>
+                <a href="../settings/settings.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#settings"></use>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="sidebar-user-avatar">U</div>
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name">User Name</div>
+                        <div class="sidebar-user-email">user@example.com</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="admin-container animate-fade-in">
+                <div class="admin-header">
+                    <h1>Admin Panel</h1>
+                    <p>Admin settings and account management</p>
+                </div>
+
+                <!-- Admin Panel Navigation -->
+                <div class="admin-nav-tabs">
+                    <button class="admin-tab-btn active" data-tab="admin-features">
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#shield"></use>
+                        </svg>
+                        Admin Features
+                    </button>
+                    <button class="admin-tab-btn" data-tab="settings">
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#settings"></use>
+                        </svg>
+                        Settings
+                    </button>
+                </div>
+
+                <!-- Admin Features Tab -->
+                <div id="admin-features" class="admin-tab-content active">
+                    <!-- Stats Grid -->
+                    <div class="stats-grid" id="stats-grid">
+                        <!-- Injected by JS -->
+                    </div>
+
+                    <!-- Analytics Charts -->
+                    <div class="admin-analytics-grid">
+                        <!-- User Growth -->
+                        <div class="glass-card admin-chart-card">
+                            <h3><svg class="icon">
+                                    <use href="../assets/icons.svg#trending-up"></use>
+                                </svg> User Growth</h3>
+                            <div class="admin-chart-container" id="user-growth-chart">
+                                <!-- Injected by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Progress Distribution -->
+                        <div class="glass-card admin-chart-card">
+                            <h3><svg class="icon">
+                                    <use href="../assets/icons.svg#bar-chart"></use>
+                                </svg> Progress Distribution</h3>
+                            <div class="admin-chart-container" id="progress-distribution-chart">
+                                <!-- Injected by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User Management -->
+                    <div class="glass-card admin-users-card">
+                        <div class="admin-card-header">
+                            <h2>User Management</h2>
+                            <div class="admin-card-actions">
+                                <button class="btn btn-outline btn-sm">
+                                    <svg class="icon icon-sm">
+                                        <use href="../assets/icons.svg#plus"></use>
+                                    </svg>
+                                    Add User
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="admin-table-container">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Joined</th>
+                                        <th>Progress</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-table-body">
+                                    <!-- Injected by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Tab -->
+                <div id="settings" class="admin-tab-content">
+                    <!-- Settings Section (Same as user settings) -->
+                    <div class="settings-container">
+                        <!-- Appearance -->
+                        <div class="glass-card settings-section">
+                            <h2>Appearance</h2>
+                            <div class="settings-theme">
+                                <div class="settings-theme-info">
+                                    <div class="settings-theme-icon">
+                                        <span id="theme-icon">
+                                            <svg class="icon">
+                                                <use href="../assets/icons.svg#moon"></use>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <p class="settings-theme-title">Theme Mode</p>
+                                        <p class="settings-theme-subtitle" id="theme-subtitle">Light mode is active</p>
+                                    </div>
+                                </div>
+                                <div class="settings-theme-toggle" style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <span class="text-muted-foreground"><svg class="icon">
+                                            <use href="../assets/icons.svg#sun"></use>
+                                        </svg></span>
+                                    <div class="switch" id="theme-toggle">
+                                        <div class="switch-thumb"></div>
+                                    </div>
+                                    <span class="text-muted-foreground"><svg class="icon">
+                                            <use href="../assets/icons.svg#moon"></use>
+                                        </svg></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile Information -->
+                        <div class="glass-card settings-section">
+                            <h2>Profile Information</h2>
+                            <div class="settings-form-group">
+                                <label class="label" for="settings-name">Full Name</label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon"><svg class="icon icon-sm">
+                                            <use href="../assets/icons.svg#user"></use>
+                                        </svg></span>
+                                    <input type="text" id="settings-name" class="input" placeholder="Your Name">
+                                </div>
+                            </div>
+                            <div class="settings-form-group">
+                                <label class="label" for="settings-email">Email Address</label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon"><svg class="icon icon-sm">
+                                            <use href="../assets/icons.svg#mail"></use>
+                                        </svg></span>
+                                    <input type="email" id="settings-email" class="input" placeholder="Your Email">
+                                </div>
+                            </div>
+                            <button class="btn btn-gradient" id="save-profile">
+                                <svg class="icon">
+                                    <use href="../assets/icons.svg#save"></use>
+                                </svg>
+                                Save Changes
+                            </button>
+                        </div>
+
+                        <!-- Change Password -->
+                        <div class="glass-card settings-section">
+                            <h2>Change Password</h2>
+                            <div class="settings-form-group">
+                                <label class="label" for="current-password">Current Password</label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon"><svg class="icon icon-sm">
+                                            <use href="../assets/icons.svg#lock"></use>
+                                        </svg></span>
+                                    <input type="password" id="current-password" class="input" placeholder="••••••••">
+                                </div>
+                            </div>
+                            <div class="settings-form-group">
+                                <label class="label" for="new-password">New Password</label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon"><svg class="icon icon-sm">
+                                            <use href="../assets/icons.svg#lock"></use>
+                                        </svg></span>
+                                    <input type="password" id="new-password" class="input" placeholder="••••••••">
+                                </div>
+                            </div>
+                            <div class="settings-form-group">
+                                <label class="label" for="confirm-password">Confirm New Password</label>
+                                <div class="input-with-icon">
+                                    <span class="input-icon"><svg class="icon icon-sm">
+                                            <use href="../assets/icons.svg#lock"></use>
+                                        </svg></span>
+                                    <input type="password" id="confirm-password" class="input" placeholder="••••••••">
+                                </div>
+                            </div>
+                            <button class="btn btn-outline" id="change-password">
+                                <svg class="icon">
+                                    <use href="../assets/icons.svg#lock"></use>
+                                </svg>
+                                Update Password
+                            </button>
+                        </div>
+
+                        <!-- Account Actions -->
+                        <div class="glass-card settings-section settings-danger">
+                            <h2>Account</h2>
+                            <p>Sign out of your account on this device.</p>
+                            <button class="btn btn-destructive" id="logout-btn">
+                                <svg class="icon">
+                                    <use href="../assets/icons.svg#log-out"></use>
+                                </svg>
+                                Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../common/config.js"></script>
+    <script src="../common/api.js"></script>
+    <script src="../common/common.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyMap - Syllabus</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../common/common.css">
+    <link rel="stylesheet" href="syllabus.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- Layout and content will be injected by syllabus.js -->
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="animate-pulse flex flex-col items-center gap-4">
+                <div class="sidebar-logo-icon" style="width: 4rem; height: 4rem;">
+                    <svg class="icon" style="width: 2rem; height: 2rem;">
+                        <use href="../assets/icons.svg#graduation-cap"></use>
+                    </svg>
+                </div>
+                <p class="text-muted-foreground">Loading your syllabus...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../common/config.js"></script>
+    <script src="../common/api.js"></script>
+    <script src="../common/common.js"></script>
+    <script src="syllabus.js"></script>
+</body>
+
+</html>

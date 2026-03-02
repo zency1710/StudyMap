@@ -1,0 +1,148 @@
+/* ================================
+   FINAL EXAM PAGE
+================================ */
+.final-exam-container {
+    max-width: 42rem;
+    margin: 0 auto;
+}
+
+.final-exam-start {
+    padding: 2rem;
+    text-align: center;
+}
+
+.final-exam-start-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    margin-bottom: 1.5rem;
+}
+
+.final-exam-start h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.final-exam-start-subtitle {
+    color: var(--muted-foreground);
+    margin-bottom: 1.5rem;
+}
+
+.final-exam-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.final-exam-stat {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background: var(--muted);
+    opacity: 0.5;
+}
+
+.final-exam-stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.final-exam-stat-label {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+.final-exam-warning {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background: hsla(38, 92%, 50%, 0.1);
+    border: 1px solid hsla(38, 92%, 50%, 0.2);
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+.final-exam-warning-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--warning);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.final-exam-warning-text {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+/* Locked State */
+.final-exam-locked {
+    padding: 2rem;
+    text-align: center;
+}
+
+.final-exam-locked-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    background: var(--muted);
+    margin-bottom: 1.5rem;
+    color: var(--muted-foreground);
+}
+
+.final-exam-locked h1 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.final-exam-locked-subtitle {
+    color: var(--muted-foreground);
+    margin-bottom: 1.5rem;
+}
+
+.final-exam-locked-progress {
+    padding: 1rem;
+    border-radius: 0.75rem;
+    background: var(--muted);
+    opacity: 0.5;
+    margin-bottom: 1.5rem;
+}
+
+.final-exam-locked-progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.final-exam-locked-remaining {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    color: var(--warning);
+    margin-bottom: 1.5rem;
+}
+
+/* Reusing test result styles from test page if needed or defining new ones here */
+.test-result-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+@media (min-width: 640px) {
+    .test-result-actions {
+        flex-direction: row;
+    }
+}

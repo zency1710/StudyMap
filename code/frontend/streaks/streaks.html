@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyMap - Streaks</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../common/common.css">
+    <link rel="stylesheet" href="streaks.css">
+</head>
+
+<body>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div class="auth-mobile-logo-icon"
+                style="width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; background: var(--gradient-primary); border-radius: 0.5rem; color: white;">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#graduation-cap"></use>
+                </svg>
+            </div>
+            <span style="font-weight: 700;">StudyMap</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button class="theme-toggle-btn" id="header-theme-toggle-mobile">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#moon"></use>
+                </svg>
+            </button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#menu"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
+                    <div class="sidebar-logo-icon">
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#graduation-cap"></use>
+                        </svg>
+                    </div>
+                    <span class="sidebar-logo-text">StudyMap</span>
+                </div>
+                <button class="theme-toggle-btn desktop-only" id="header-theme-toggle">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#moon"></use>
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="../dashboard/dashboard.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#home"></use>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../upload/upload.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#upload"></use>
+                    </svg>
+                    <span>Upload PDF</span>
+                </a>
+                <a href="../syllabus/syllabus.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#book-open"></use>
+                    </svg>
+                    <span>Syllabus</span>
+                </a>
+                <a href="../streaks/streaks.html" class="sidebar-nav-item active">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#flame"></use>
+                    </svg>
+                    <span>Streaks</span>
+                </a>
+                <a href="../final-exam/final-exam.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#trophy"></use>
+                    </svg>
+                    <span>Final Exam</span>
+                </a>
+                <a href="../analytics/analytics.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#bar-chart"></use>
+                    </svg>
+                    <span>Analytics</span>
+                </a>
+                <a href="../settings/settings.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#settings"></use>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="sidebar-user-avatar">U</div>
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name">User Name</div>
+                        <div class="sidebar-user-email">user@example.com</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="context-banner-container"></div>
+            <div class="streaks-page animate-fade-in">
+                <div class="streaks-header">
+                    <div class="streaks-title-group">
+                        <h1 class="streaks-title">Daily Streaks</h1>
+                        <p class="streaks-subtitle">Consistency is key. Track your learning habits and keep the flame
+                            alive.</p>
+                    </div>
+
+                    <div class="streak-counter-card glass-card">
+                        <div class="streak-counter-content">
+                            <div class="streak-counter-icon animate-pulse-soft">
+                                <svg class="icon">
+                                    <use href="../assets/icons.svg#flame"></use>
+                                </svg>
+                            </div>
+                            <div class="streak-counter-info">
+                                <span class="streak-counter-value" id="current-streak">0</span>
+                                <span class="streak-counter-label">DAY STREAK</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="streaks-grid">
+                    <!-- Activity Log -->
+                    <div class="glass-card activity-log-card">
+                        <div class="card-header-flex">
+                            <h3>Activity Log</h3>
+                            <div class="heatmap-legend-simple">
+                                <span>Inactive</span>
+                                <div class="legend-cells">
+                                    <div class="heatmap-cell inactive"></div>
+                                    <div class="heatmap-cell active"></div>
+                                </div>
+                                <span>Active</span>
+                            </div>
+                        </div>
+
+                        <div class="activity-log-container" id="streak-heatmap">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <div class="activity-log-footer">
+                            <div class="heatmap-legend-leetcode">
+                                <span>Less</span>
+                                <div class="legend-cells">
+                                    <div class="heatmap-cell inactive"></div>
+                                    <div class="heatmap-cell active" style="opacity: 0.4;"></div>
+                                    <div class="heatmap-cell active" style="opacity: 0.7;"></div>
+                                    <div class="heatmap-cell active"></div>
+                                </div>
+                                <span>More</span>
+                            </div>
+                            <div class="total-stats">
+                                <span>Total points this year: <strong id="total-points">0 pts</strong></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weekly Focus -->
+                    <div class="glass-card weekly-focus-card">
+                        <div class="card-header-flex">
+                            <h3>Weekly Focus</h3>
+                            <button class="btn-icon-sm">
+                                <svg class="icon icon-sm">
+                                    <use href="../assets/icons.svg#settings"></use>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="weekly-chart" id="weekly-chart">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <div class="weekly-focus-footer">
+                            <p>You completed <strong>12 tasks</strong> this week.</p>
+                        </div>
+                    </div>
+
+
+                    <!-- Earned Badges -->
+                    <div class="glass-card badges-card">
+                        <div class="card-header-flex">
+                            <h3>Earned Badges</h3>
+                            <button class="text-link">View All</button>
+                        </div>
+
+                        <div class="badges-grid">
+                            <div class="badge-item active">
+                                <div class="badge-icon gold">
+                                    <svg class="icon">
+                                        <use href="../assets/icons.svg#trophy"></use>
+                                    </svg>
+                                </div>
+                                <span class="badge-name">Week Warrior</span>
+                            </div>
+                            <div class="badge-item active">
+                                <div class="badge-icon blue">
+                                    <svg class="icon">
+                                        <use href="../assets/icons.svg#check-circle"></use>
+                                    </svg>
+                                </div>
+                                <span class="badge-name">Fast Verifier</span>
+                            </div>
+                            <div class="badge-item locked">
+                                <div class="badge-icon">
+                                    <svg class="icon">
+                                        <use href="../assets/icons.svg#lock"></use>
+                                    </svg>
+                                </div>
+                                <span class="badge-name">30 Day Streak</span>
+                            </div>
+                            <div class="badge-item locked">
+                                <div class="badge-icon">
+                                    <svg class="icon">
+                                        <use href="../assets/icons.svg#lock"></use>
+                                    </svg>
+                                </div>
+                                <span class="badge-name">Quiz Master</span>
+                            </div>
+                            <div class="badge-item locked">
+                                <div class="badge-icon">
+                                    <svg class="icon">
+                                        <use href="../assets/icons.svg#lock"></use>
+                                    </svg>
+                                </div>
+                                <span class="badge-name">Early Bird</span>
+                            </div>
+                            <div class="badge-item locked">
+                                <div class="badge-icon">
+                                    <svg class="icon">
+                                        <use href="../assets/icons.svg#lock"></use>
+                                    </svg>
+                                </div>
+                                <span class="badge-name">Helper</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../common/config.js"></script>
+    <script src="../common/api.js"></script>
+    <script src="../common/common.js"></script>
+    <script src="streaks.js"></script>
+</body>
+
+</html>

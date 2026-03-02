@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyMap - Upload Syllabus</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="stylesheet" href="../common/common.css">
+    <link rel="stylesheet" href="upload.css">
+</head>
+
+<body>
+    <!-- Mobile Header -->
+    <div class="mobile-header">
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <div class="auth-mobile-logo-icon"
+                style="width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; background: var(--gradient-primary); border-radius: 0.5rem; color: white;">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#graduation-cap"></use>
+                </svg>
+            </div>
+            <span style="font-weight: 700;">StudyMap</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+            <button class="theme-toggle-btn" id="header-theme-toggle-mobile">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#moon"></use>
+                </svg>
+            </button>
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <svg class="icon">
+                    <use href="../assets/icons.svg#menu"></use>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Overlay -->
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo">
+                <div style="display: flex; align-items: center; gap: 0.75rem; flex: 1;">
+                    <div class="sidebar-logo-icon">
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#graduation-cap"></use>
+                        </svg>
+                    </div>
+                    <span class="sidebar-logo-text">StudyMap</span>
+                </div>
+                <button class="theme-toggle-btn desktop-only" id="header-theme-toggle">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#moon"></use>
+                    </svg>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="../dashboard/dashboard.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#home"></use>
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="../upload/upload.html" class="sidebar-nav-item active">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#upload"></use>
+                    </svg>
+                    <span>Upload PDF</span>
+                </a>
+                <a href="../syllabus/syllabus.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#book-open"></use>
+                    </svg>
+                    <span>Syllabus</span>
+                </a>
+                <a href="../streaks/streaks.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#flame"></use>
+                    </svg>
+                    <span>Streaks</span>
+                </a>
+                <a href="../final-exam/final-exam.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#trophy"></use>
+                    </svg>
+                    <span>Final Exam</span>
+                </a>
+                <a href="../analytics/analytics.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#bar-chart"></use>
+                    </svg>
+                    <span>Analytics</span>
+                </a>
+                <a href="../settings/settings.html" class="sidebar-nav-item">
+                    <svg class="icon">
+                        <use href="../assets/icons.svg#settings"></use>
+                    </svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="sidebar-user-avatar">U</div>
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name">User Name</div>
+                        <div class="sidebar-user-email">user@example.com</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="context-banner-container"></div>
+            <div class="upload-container">
+                <div class="upload-header animate-slide-up">
+                    <h1>Upload Your Syllabus</h1>
+                    <p>Upload your curriculum PDF and we'll extract subjects and topics for you</p>
+                </div>
+
+                <div class="glass-card upload-zone animate-slide-up delay-1" id="upload-zone">
+                    <div class="upload-zone-content" id="upload-zone-content">
+                        <div class="upload-zone-icon">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#upload"></use>
+                            </svg>
+                        </div>
+                        <p class="upload-zone-text">Drag & drop your PDF here</p>
+                        <p class="upload-zone-subtext">or click to browse</p>
+                        <button class="btn btn-outline" id="browse-btn">Browse Files</button>
+                        <input type="file" accept=".pdf" class="upload-file-input" id="file-input">
+                    </div>
+
+                    <!-- File Preview (hidden by default) -->
+                    <div id="file-preview" class="hidden" style="padding: 1.5rem;">
+                        <div class="upload-file-preview">
+                            <div class="upload-file-icon">
+                                <svg class="icon">
+                                    <use href="../assets/icons.svg#file-text"></use>
+                                </svg>
+                            </div>
+                            <div class="upload-file-info">
+                                <p class="upload-file-name" id="file-name"></p>
+                                <p class="upload-file-size" id="file-size"></p>
+                            </div>
+                            <button class="btn btn-ghost btn-icon" id="remove-file">
+                                <svg class="icon">
+                                    <use href="../assets/icons.svg#x"></use>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div class="upload-progress hidden" id="upload-progress">
+                            <div class="upload-progress-header">
+                                <span class="upload-progress-status" id="upload-status">Uploading...</span>
+                                <span class="upload-progress-percentage" id="upload-percentage">0%</span>
+                            </div>
+                            <div class="progress-bar" style="height: 0.5rem;">
+                                <div class="progress-bar-fill" id="progress-fill" style="width: 0%;"></div>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-gradient btn-lg" style="width: 100%; margin-top: 1rem;" id="upload-btn">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#upload"></use>
+                            </svg>
+                            Upload PDF
+                        </button>
+                    </div>
+                </div>
+
+                <div class="upload-info-grid animate-slide-up delay-2">
+                    <div class="glass-card upload-info-card">
+                        <div class="upload-info-content">
+                            <div class="upload-info-icon primary">
+                                <svg class="icon">
+                                    <use href="../assets/icons.svg#file-text"></use>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="upload-info-title">Supported Format</h3>
+                                <p class="upload-info-text">PDF files only. Max file size: 10MB</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card upload-info-card">
+                        <div class="upload-info-content">
+                            <div class="upload-info-icon success">
+                                <svg class="icon">
+                                    <use href="../assets/icons.svg#check-circle"></use>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="upload-info-title">Auto Extraction</h3>
+                                <p class="upload-info-text">We'll automatically extract subjects and topics</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card upload-tips animate-slide-up delay-3" style="padding: 1.25rem;">
+                    <div class="upload-info-content">
+                        <div class="upload-info-icon warning">
+                            <svg class="icon">
+                                <use href="../assets/icons.svg#alert-circle"></use>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="upload-info-title" style="margin-bottom: 0.5rem;">Tips for best results</h3>
+                            <ul>
+                                <li>• Make sure your PDF has clear text (not just images)</li>
+                                <li>• Structured syllabi with headings work best</li>
+                                <li>• You can edit the extracted content after upload</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../common/config.js"></script>
+    <script src="../common/api.js"></script>
+    <script src="../common/common.js"></script>
+    <script src="upload.js"></script>
+</body>
+
+</html>
