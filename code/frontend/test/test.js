@@ -241,7 +241,7 @@ function setupTest() {
                     </div>
                     <div class="review-options">${optionsHTML}</div>
                     ${r.userAnswer === null || r.userAnswer === undefined
-                        ? '<p class="review-skipped">⚠ Not answered</p>' : ''}
+                        ? '<p class="review-skipped">Not answered</p>' : ''}
                 </div>`;
             }).join('');
 
@@ -252,7 +252,7 @@ function setupTest() {
                     <div class="result-icon ${data.passed ? 'success' : 'failed'}" style="margin-bottom: 1.5rem;">
                         <svg class="icon icon-xl" style="width: 72px; height: 72px; color: ${data.passed ? 'var(--success)' : 'var(--destructive)'};"><use href="${ICONS_PATH}#${data.passed ? 'check-circle' : 'x-circle'}"></use></svg>
                     </div>
-                    <h1 style="font-size: 2.25rem; margin-bottom: 0.75rem;">${data.passed ? '🎉 Topic Verified!' : 'Not Quite There'}</h1>
+                    <h1 style="font-size: 2.25rem; margin-bottom: 0.75rem;">${data.passed ? 'Topic Verified!' : 'Not Quite There'}</h1>
                     <p style="font-size: 1.125rem; color: var(--muted-foreground); margin-bottom: 0.5rem;">
                         You scored <strong style="color: ${data.passed ? 'var(--success)' : 'var(--destructive)'};">${data.score}%</strong>
                     </p>

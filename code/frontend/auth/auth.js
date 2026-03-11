@@ -8,6 +8,57 @@ function setupAuthPage() {
     const btnText = document.getElementById('auth-btn-text');
     const nameGroup = document.getElementById('name-group');
 
+    // Forgot Password elements
+    const forgotLink = document.getElementById('forgot-password-link');
+    const mainAuthCard = document.getElementById('main-auth-card');
+    const forgotPasswordCard = document.getElementById('forgot-password-card');
+    const backToLoginBtn = document.getElementById('back-to-login');
+    const forgotForm = document.getElementById('forgot-password-form');
+
+    forgotLink.onclick = (e) => {
+        e.preventDefault();
+        mainAuthCard.style.display = 'none';
+        forgotPasswordCard.style.display = 'block';
+        forgotPasswordCard.classList.remove('hidden');
+    };
+
+    backToLoginBtn.onclick = () => {
+        forgotPasswordCard.style.display = 'none';
+        mainAuthCard.style.display = 'block';
+    };
+
+    forgotForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('forgot-email').value;
+        const btnIcon = document.querySelector('#forgot-submit .icon use');
+        
+        const originalIconHref = btnIcon.getAttribute('href');
+        btnIcon.setAttribute('href', '../assets/icons.svg#loader');
+        btnIcon.parentElement.classList.add('animate-spin');
+
+        try {
+            // we calculate the base url for the reset link
+            const baseUrl = window.location.origin + window.location.pathname.replace('auth.html', 'reset-password.html');
+            const result = await API.forgotPassword(email, baseUrl);
+            
+            if (result.error) {
+                Toast.show('Error', result.error, 'error');
+            } else {
+                Toast.show('Email Sent', result.message || 'If an account exists, a password reset link has been sent.', 'success');
+                // return to login screen
+                forgotPasswordCard.style.display = 'none';
+                mainAuthCard.style.display = 'block';
+            }
+        } catch (error) {
+            console.error('Forgot password error:', error);
+            Toast.show('Error', 'Something went wrong. Please try again.', 'error');
+        } finally {
+            btnIcon.setAttribute('href', originalIconHref);
+            btnIcon.parentElement.classList.remove('animate-spin');
+        }
+    };
+
+
     toggle.onclick = () => {
         isLogin = !isLogin;
         if (isLogin) {
@@ -17,6 +68,7 @@ function setupAuthPage() {
             toggle.textContent = 'Sign up';
             btnText.textContent = 'Sign In';
             nameGroup.classList.add('hidden');
+            if (forgotLink) forgotLink.style.display = 'inline-block';
         } else {
             title.textContent = 'Create account';
             subtitle.textContent = 'Start your learning journey today';
@@ -24,6 +76,7 @@ function setupAuthPage() {
             toggle.textContent = 'Sign in';
             btnText.textContent = 'Create Account';
             nameGroup.classList.remove('hidden');
+            if (forgotLink) forgotLink.style.display = 'none';
         }
     };
 

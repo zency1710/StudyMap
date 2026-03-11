@@ -22,6 +22,27 @@ const API = {
         return response.json();
     },
 
+    async forgotPassword(email, resetUrlBase) {
+        const response = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, reset_url_base: resetUrlBase })
+        });
+        return response.json();
+    },
+
+    async resetPassword(token, newPassword) {
+        const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({ new_password: newPassword })
+        });
+        return response.json();
+    },
+
     async getCurrentUser() {
         const token = localStorage.getItem('studymap-token');
         const response = await fetch(`${API_BASE_URL}/auth/me`, {

@@ -659,6 +659,112 @@ def login():
         return jsonify({'error': str(e)}), 500
 
 
+import requests
+
+def send_reset_email(to_email, reset_link):
+    api_key = os.environ.get('BREVO_API_KEY', '')
+    sender_email = os.environ.get('SENDER_EMAIL', 'noreply@studymap.com')
+    
+    if not api_key or api_key == 'your_free_brevo_api_key_here':
+        print(f"WARNING: BREVO_API_KEY not provided. Printing reset link to console:")
+        print(f"[{to_email}] Reset Link: {reset_link}")
+        return True
+        
+    try:
+        url = "https://api.brevo.com/v3/smtp/email"
+        headers = {
+            "accept": "application/json",
+            "api-key": api_key,
+            "content-type": "application/json"
+        }
+        
+        data = {
+            "sender": {
+                "name": "StudyMap",
+                "email": sender_email
+            },
+            "to": [{"email": to_email}],
+            "subject": "StudyMap - Password Reset",
+            "textContent": f"Hello,\n\nTo reset your password, please click the link below:\n\n{reset_link}\n\nThis link will expire in 15 minutes.\n\nIf you did not request this, please ignore this email."
+        }
+        
+        response = requests.post(url, headers=headers, json=data)
+        
+        if response.status_code in [200, 201, 202]:
+            print("Reset email successfully sent via Brevo API")
+            return True
+        else:
+            print(f"Failed to send email via Brevo API: {response.text}")
+            return False
+            
+    except Exception as e:
+        print(f"Exception during email send: {e}")
+        return False
+
+@app.route('/api/auth/forgot-password', methods=['POST'])
+def forgot_password():
+    """Send a password reset link to user's email"""
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        reset_url_base = data.get('reset_url_base', 'http://localhost:5000/auth/reset-password.html')
+        
+        if not email:
+            return jsonify({'error': 'Email is required'}), 400
+            
+        user = User.query.filter_by(email=email).first()
+        if not user:
+            # Return success even if user not found to prevent email enumeration
+            return jsonify({'message': 'If an account exists, a password reset link has been sent.'}), 200
+            
+        reset_token = create_access_token(
+            identity=str(user.id),
+            additional_claims={"type": "password_reset"},
+            expires_delta=timedelta(minutes=15)
+        )
+        
+        reset_link = f"{reset_url_base}?token={reset_token}"
+        send_reset_email(user.email, reset_link)
+        
+        return jsonify({'message': 'If an account exists, a password reset link has been sent.'}), 200
+        
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/api/auth/reset-password', methods=['POST'])
+@jwt_required()
+def reset_password():
+    """Reset password using a valid token"""
+    try:
+        from flask_jwt_extended import get_jwt
+        claims = get_jwt()
+        
+        # Verify it's a password reset token
+        if claims.get("type") != "password_reset":
+            return jsonify({'error': 'Invalid token type for password reset'}), 400
+            
+        user_id = int(get_jwt_identity())
+        user = User.query.get(user_id)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+            
+        data = request.get_json()
+        new_password = data.get('new_password')
+        
+        if not new_password or len(new_password) < 6:
+            return jsonify({'error': 'Password must be at least 6 characters long'}), 400
+            
+        user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+        db.session.commit()
+        
+        return jsonify({'message': 'Password has been successfully reset.'}), 200
+        
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
 @app.route('/api/auth/me', methods=['GET'])
 @jwt_required()
 def get_current_user():

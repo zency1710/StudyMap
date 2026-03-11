@@ -33,10 +33,10 @@ def check_dependencies():
             missing.append(package)
     
     if missing:
-        print("❌ Missing required packages:")
+        print("[ERROR] Missing required packages:")
         for pkg in missing:
             print(f"   - {pkg}")
-        print("\n📦 Install missing packages with:")
+        print("\n[INFO] Install missing packages with:")
         print("   pip install -r requirements.txt")
         return False
     
@@ -48,7 +48,7 @@ def create_upload_folder():
     upload_folder = 'uploads'
     if not os.path.exists(upload_folder):
         os.makedirs(upload_folder)
-        print(f"✅ Created upload folder: {upload_folder}")
+        print(f"[OK] Created upload folder: {upload_folder}")
 
 def ensure_mysql_database():
     """Ensure MySQL database exists and is accessible"""
@@ -68,12 +68,12 @@ def ensure_mysql_database():
         conn.commit()
         cur.close()
         conn.close()
-        print(f"✅ Ensured MySQL database exists: {db_name}")
+        print(f"[OK] Ensured MySQL database exists: {db_name}")
     except Exception as e:
-        print(f"⚠️  MySQL connection failed: {str(e)}")
-        print("💡 Make sure MySQL server is running and credentials are correct.")
+        print(f"[WARN] MySQL connection failed: {str(e)}")
+        print("[TIP] Make sure MySQL server is running and credentials are correct.")
         print(f"   Database URL: {dsn.replace(password, '****')}")
-        print("\n🔑 Please ensure MySQL is installed and running, then try again.")
+        print("\n[INFO] Please ensure MySQL is installed and running, then try again.")
         # Don't exit - let Flask handle the database connection error gracefully
 
 import webbrowser
@@ -95,7 +95,7 @@ def start_frontend_server():
             break
     
     if not frontend_dir:
-        print("❌ Could not locate 'frontend' directory.")
+        print("[ERROR] Could not locate 'frontend' directory.")
         print(f"   Checked paths relative to {here}:")
         for p in potential_paths:
             print(f"   - {os.path.normpath(p)}")
@@ -104,19 +104,19 @@ def start_frontend_server():
     try:
         proc = subprocess.Popen([sys.executable, "-m", "http.server", "8000"], cwd=frontend_dir)
         time.sleep(1)
-        print("🚀 Starting Frontend server...")
-        print("📍 Frontend running at: http://localhost:8000")
+        print("[START] Starting Frontend server...")
+        print("[INFO] Frontend running at: http://localhost:8000")
         
         # Open browser
         try:
             webbrowser.open('http://localhost:8000')
-            print("🌐 Opened in default browser")
+            print("[INFO] Opened in default browser")
         except Exception:
             pass
             
         return proc
     except Exception as e:
-        print(f"❌ Error starting frontend server: {str(e)}")
+        print(f"[ERROR] Error starting frontend server: {str(e)}")
         sys.exit(1)
 
 def main():
@@ -127,10 +127,10 @@ def main():
     print()
     
     # Check dependencies
-    print("🔍 Checking dependencies...")
+    print("[CHECK] Checking dependencies...")
     if not check_dependencies():
         sys.exit(1)
-    print("✅ All dependencies installed")
+    print("[OK] All dependencies installed")
     print()
     
     # Ensure MySQL database is ready and environment is set
@@ -146,16 +146,16 @@ def main():
         fe_proc = start_frontend_server()
         from app import app, init_db
         
-        print("🗄️  Initializing database...")
+        print("[DB] Initializing database...")
         init_db()
         print()
         
-        print("🚀 Starting Flask server...")
-        print("📍 Server running at: http://localhost:5000")
-        print("📍 API base URL: http://localhost:5000/api")
-        print("📍 Frontend URL: http://localhost:8000")
+        print("[START] Starting Flask server...")
+        print("[INFO] Server running at: http://localhost:5000")
+        print("[INFO] API base URL: http://localhost:5000/api")
+        print("[INFO] Frontend URL: http://localhost:8000")
         print()
-        print("📝 Default admin credentials:")
+        print("[INFO] Default admin credentials:")
         print("   Email: admin@studymap.com")
         print("   Password: admin123")
         print()
@@ -166,9 +166,9 @@ def main():
         app.run(debug=True, host='0.0.0.0', port=5000)
         
     except KeyboardInterrupt:
-        print("\n\n👋 Server stopped")
+        print("\n\nServer stopped")
     except Exception as e:
-        print(f"\n❌ Error starting server: {str(e)}")
+        print(f"\n[ERROR] Error starting server: {str(e)}")
         sys.exit(1)
     finally:
         try:

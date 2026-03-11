@@ -460,7 +460,7 @@ function setupManualEntry() {
 
             if (result.error) throw new Error(result.error);
 
-            Toast.show('Saved! 🎉', `"${syllabusName}" has been saved. Redirecting…`);
+            Toast.show('Saved!', `"${syllabusName}" has been saved. Redirecting…`);
 
             // Redirect to the manual syllabus view page
             setTimeout(() => {
