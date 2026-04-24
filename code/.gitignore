@@ -16,6 +16,10 @@ build/
 .env
 *.env
 
+# SQLite / Flask instance folder
+instance/
+*.db
+
 # Uploads (user-uploaded files)
 uploads/
 

@@ -18,8 +18,13 @@ from pdf_pipeline import extract_syllabus_structure
 # Load environment variables
 load_dotenv()
 
-# Initialize OpenAI Client
-openai_client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
+# Initialize OpenAI Client (only if API key is available)
+_openai_api_key = os.environ.get('OPENAI_API_KEY')
+if _openai_api_key and _openai_api_key != 'your-openai-api-key':
+    openai_client = OpenAI(api_key=_openai_api_key)
+else:
+    openai_client = None
+    print("[WARN] OPENAI_API_KEY not set. AI features will use fallback manual parsing.")
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -665,10 +670,14 @@ def send_reset_email(to_email, reset_link):
     api_key = os.environ.get('BREVO_API_KEY', '')
     sender_email = os.environ.get('SENDER_EMAIL', 'noreply@studymap.com')
     
+    print(f"[EMAIL] Attempting to send reset email to: {to_email}")
+    print(f"[EMAIL] BREVO_API_KEY present: {bool(api_key)} (starts with: {api_key[:15]}...)" if api_key else "[EMAIL] BREVO_API_KEY is EMPTY")
+    print(f"[EMAIL] Sender email: {sender_email}")
+    
     if not api_key or api_key == 'your_free_brevo_api_key_here':
-        print(f"WARNING: BREVO_API_KEY not provided. Printing reset link to console:")
-        print(f"[{to_email}] Reset Link: {reset_link}")
-        return True
+        print(f"[EMAIL] WARNING: BREVO_API_KEY not configured! Email NOT sent.")
+        print(f"[EMAIL] [{to_email}] Reset Link (console only): {reset_link}")
+        return False
         
     try:
         url = "https://api.brevo.com/v3/smtp/email"
@@ -678,27 +687,51 @@ def send_reset_email(to_email, reset_link):
             "content-type": "application/json"
         }
         
+        html_content = f"""
+        <html>
+        <body style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
+            <div style="max-width: 500px; margin: auto; background: #ffffff; border-radius: 12px; padding: 32px; box-shadow: 0 2px 8px rgba(0,0,0,0.08);">
+                <h2 style="color: #6C63FF; text-align: center;">StudyMap</h2>
+                <p>Hello,</p>
+                <p>We received a request to reset your password. Click the button below to set a new password:</p>
+                <div style="text-align: center; margin: 24px 0;">
+                    <a href="{reset_link}" style="background: linear-gradient(135deg, #6C63FF, #4F46E5); color: white; padding: 12px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">Reset Password</a>
+                </div>
+                <p style="font-size: 13px; color: #888;">This link will expire in 15 minutes.</p>
+                <p style="font-size: 13px; color: #888;">If you did not request this, please ignore this email.</p>
+            </div>
+        </body>
+        </html>
+        """
+        
         data = {
             "sender": {
                 "name": "StudyMap",
                 "email": sender_email
             },
-            "to": [{"email": to_email}],
+            "to": [{"email": to_email, "name": to_email.split('@')[0]}],
             "subject": "StudyMap - Password Reset",
+            "htmlContent": html_content,
             "textContent": f"Hello,\n\nTo reset your password, please click the link below:\n\n{reset_link}\n\nThis link will expire in 15 minutes.\n\nIf you did not request this, please ignore this email."
         }
         
+        print(f"[EMAIL] Sending request to Brevo API...")
         response = requests.post(url, headers=headers, json=data)
         
+        print(f"[EMAIL] Brevo API response status: {response.status_code}")
+        print(f"[EMAIL] Brevo API response body: {response.text}")
+        
         if response.status_code in [200, 201, 202]:
-            print("Reset email successfully sent via Brevo API")
+            print(f"[EMAIL] Reset email successfully sent to {to_email}")
             return True
         else:
-            print(f"Failed to send email via Brevo API: {response.text}")
+            print(f"[EMAIL] FAILED to send email via Brevo API: {response.status_code} - {response.text}")
             return False
             
     except Exception as e:
-        print(f"Exception during email send: {e}")
+        print(f"[EMAIL] Exception during email send: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
 @app.route('/api/auth/forgot-password', methods=['POST'])
@@ -724,11 +757,15 @@ def forgot_password():
         )
         
         reset_link = f"{reset_url_base}?token={reset_token}"
-        send_reset_email(user.email, reset_link)
+        email_sent = send_reset_email(user.email, reset_link)
         
-        return jsonify({'message': 'If an account exists, a password reset link has been sent.'}), 200
+        if not email_sent:
+            return jsonify({'error': 'Failed to send reset email. Please try again later or contact support.'}), 500
+        
+        return jsonify({'message': 'Password reset link has been sent to your email.'}), 200
         
     except Exception as e:
+        print(f"[EMAIL] forgot_password route error: {e}")
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/auth/reset-password', methods=['POST'])
@@ -1636,14 +1673,17 @@ def get_final_exam_questions():
         topics = Topic.query.join(Subject).filter(
             Subject.syllabus_id == syllabus.id,
             Topic.status == 'verified'
-        ).all()
+        ).order_by(Topic.id).all()
         
         for topic in topics:
-            topic_questions = Question.query.filter_by(topic_id=topic.id).limit(1).all()
+            topic_questions = Question.query.filter_by(topic_id=topic.id).order_by(Question.id).all()
             questions.extend([q.to_dict(include_answer=False) for q in topic_questions])
         
-        # Limit to 50 questions
-        questions = questions[:50]
+        # Ensure exactly 25 questions by repeating if necessary
+        if questions:
+            questions = (questions * 25)[:25]
+        else:
+            questions = []
         
         return jsonify({'questions': questions}), 200
         
@@ -1669,8 +1709,31 @@ def submit_final_exam():
 
         answers = data.get('answers', [])
         
-        # For demo purposes, generate a random score
-        score = random.randint(60, 95)
+        # Get questions to evaluate
+        questions = []
+        topics = Topic.query.join(Subject).filter(
+            Subject.syllabus_id == syllabus.id,
+            Topic.status == 'verified'
+        ).order_by(Topic.id).all()
+        
+        for topic in topics:
+            topic_questions = Question.query.filter_by(topic_id=topic.id).order_by(Question.id).all()
+            questions.extend(topic_questions)
+        
+        # Ensure exactly 25 questions by repeating if necessary
+        if questions:
+            questions = (questions * 25)[:25]
+        else:
+            questions = []
+        
+        correct_count = 0
+        for idx, question in enumerate(questions):
+            user_answer = answers[idx] if idx < len(answers) else None
+            if (user_answer is not None) and (question.correct_answer == user_answer):
+                correct_count += 1
+                
+        # Calculate percentage score
+        score = int((correct_count / len(questions)) * 100) if questions else 0
         
         # Save or update final exam record for this specific syllabus
         final_exam = FinalExam.query.filter_by(user_id=user_id, syllabus_id=syllabus.id).first()
@@ -1768,6 +1831,88 @@ def delete_user(user_id):
         
     except Exception as e:
         db.session.rollback()
+        return jsonify({'error': str(e)}), 500
+
+
+# ================================
+# ADMIN REPORT ROUTE
+# ================================
+
+@app.route('/api/admin/report', methods=['GET'])
+@jwt_required()
+def get_admin_report():
+    """Get full admin report with all user data in one table (admin only)"""
+    try:
+        user_id = get_jwt_identity()
+        current_user = User.query.get(user_id)
+
+        if not current_user or current_user.role != 'admin':
+            return jsonify({'error': 'Unauthorized'}), 403
+
+        users = User.query.all()
+        report = []
+
+        for user in users:
+            # Syllabi count
+            syllabi = Syllabus.query.filter_by(user_id=user.id).all()
+            syllabi_count = len(syllabi)
+            syllabi_names = ', '.join([s.name for s in syllabi]) if syllabi else None
+
+            # Topics / verified topics / progress
+            total_topics = 0
+            verified_topics = 0
+            for s in syllabi:
+                t_count = Topic.query.join(Subject).filter(Subject.syllabus_id == s.id).count()
+                v_count = Topic.query.join(Subject).filter(
+                    Subject.syllabus_id == s.id,
+                    Topic.status == 'verified'
+                ).count()
+                total_topics += t_count
+                verified_topics += v_count
+
+            progress = int((verified_topics / total_topics) * 100) if total_topics > 0 else 0
+
+            # Test attempts
+            test_attempts = TestAttempt.query.filter_by(user_id=user.id).all()
+            test_count = len(test_attempts)
+            avg_score = round(sum(t.score for t in test_attempts) / test_count) if test_count > 0 else 0
+            tests_passed = sum(1 for t in test_attempts if t.passed)
+
+            # Streak
+            streak = Streak.query.filter_by(user_id=user.id).first()
+            current_streak = streak.current_streak if streak else 0
+            longest_streak = streak.longest_streak if streak else 0
+            last_activity = streak.last_activity_date.isoformat() if streak and streak.last_activity_date else None
+
+            # Final exam
+            final_exams = FinalExam.query.filter_by(user_id=user.id).all()
+            finals_completed = sum(1 for f in final_exams if f.completed)
+            best_final_score = max((f.score for f in final_exams if f.score is not None), default=0)
+
+            report.append({
+                'id': user.id,
+                'name': user.name,
+                'email': user.email,
+                'role': user.role,
+                'joined': user.created_at.strftime('%Y-%m-%d %H:%M:%S'),
+                'syllabi_count': syllabi_count,
+                'syllabi_names': syllabi_names,
+                'total_topics': total_topics,
+                'verified_topics': verified_topics,
+                'progress': progress,
+                'test_attempts': test_count,
+                'tests_passed': tests_passed,
+                'avg_test_score': avg_score,
+                'current_streak': current_streak,
+                'longest_streak': longest_streak,
+                'last_activity': streak.last_activity_date.strftime('%Y-%m-%d %H:%M:%S') if streak and streak.last_activity_date else None,
+                'finals_completed': finals_completed,
+                'best_final_score': best_final_score
+            })
+
+        return jsonify({'report': report}), 200
+
+    except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 
@@ -1900,11 +2045,11 @@ def init_db():
                 db.session.add(streak)
                 
                 db.session.commit()
-                print('✅ Admin user created: admin@studymap.com / admin123')
+                print('[OK] Admin user created: admin@studymap.com / admin123')
             else:
-                print('✅ Admin user already exists')
+                print('[OK] Admin user already exists')
     except Exception as e:
-        print(f"⚠️  Database initialization warning: {str(e)}")
+        print(f"[WARN] Database initialization warning: {str(e)}")
         print("   The server will continue, but API may not work until database is available")
         print("   Make sure MySQL is running and credentials in .env are correct")
 
@@ -1915,6 +2060,6 @@ def init_db():
 
 if __name__ == '__main__':
     init_db()
-    print('✅ Database initialized')
-    print('🚀 Starting Flask server on http://localhost:5000')
+    print('[OK] Database initialized')
+    print('[START] Starting Flask server on http://localhost:5000')
     app.run(debug=True, host='0.0.0.0', port=5000)

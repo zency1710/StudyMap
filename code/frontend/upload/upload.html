@@ -295,7 +295,8 @@
                             <div class="man-field">
                                 <label class="man-label" for="inp-unit">Unit Name <span class="man-req">*</span></label>
                                 <input class="man-input" id="inp-unit" type="text" placeholder="e.g. Unit 1"
-                                    maxlength="200" autocomplete="off">
+                                    maxlength="200" autocomplete="nope" list="unit-suggestions">
+                                <datalist id="unit-suggestions"></datalist>
                                 <span class="man-err hidden" id="err-unit">Unit name cannot be empty.</span>
                             </div>
                             <!-- Topic Name -->
@@ -303,7 +304,8 @@
                                 <label class="man-label" for="inp-topic">Topic Name <span
                                         class="man-req">*</span></label>
                                 <input class="man-input" id="inp-topic" type="text" placeholder="e.g. Introduction"
-                                    maxlength="200" autocomplete="off">
+                                    maxlength="200" autocomplete="nope" list="topic-suggestions">
+                                <datalist id="topic-suggestions"></datalist>
                                 <span class="man-err hidden" id="err-topic">Topic name cannot be empty.</span>
                             </div>
                             <!-- Subtopic Name -->

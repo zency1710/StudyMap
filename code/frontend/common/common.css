@@ -134,6 +134,13 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 h1,
 h2,
 h3,
@@ -855,6 +862,7 @@ input {
 .layout {
     display: flex;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 /* Sidebar */
@@ -870,6 +878,7 @@ input {
     top: 0;
     bottom: 0;
     overflow-y: auto;
+    z-index: 30;
 }
 
 .sidebar-logo {
@@ -990,7 +999,10 @@ input {
     margin-left: 280px;
     padding: 2rem;
     min-height: 100vh;
-    width: 100%;
+    width: calc(100% - 280px);
+    min-width: 0;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
 
 /* ================================
@@ -1109,24 +1121,22 @@ input {
    SCROLLBAR
 ================================ */
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: var(--muted);
-    opacity: 0.5;
-    border-radius: 9999px;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
     background: var(--muted-foreground);
+    border-radius: 99px;
     opacity: 0.3;
-    border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    opacity: 0.5;
+    background: var(--primary);
 }
 
 /* ================================
@@ -1146,6 +1156,8 @@ input {
     .main-content {
         margin-left: 0;
         padding: 1rem;
+        max-width: 100%;
+        width: 100%;
     }
 
     .mobile-header {
@@ -1306,6 +1318,7 @@ input {
         opacity: 0;
     }
 }
+
 /* Accessibility and production hardening */
 :focus-visible {
     outline: 3px solid var(--primary-soft-30);
@@ -1313,6 +1326,7 @@ input {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {

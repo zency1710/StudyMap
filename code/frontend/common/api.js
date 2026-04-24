@@ -303,5 +303,13 @@ const API = {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         return response.json();
+    },
+
+    async getAdminReport() {
+        const token = localStorage.getItem('studymap-token');
+        const response = await fetch(`${API_BASE_URL}/admin/report`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        return response.json();
     }
 };

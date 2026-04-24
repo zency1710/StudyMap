@@ -100,6 +100,12 @@
                         </svg>
                         Admin Features
                     </button>
+                    <button class="admin-tab-btn" data-tab="full-report">
+                        <svg class="icon">
+                            <use href="../assets/icons.svg#file-text"></use>
+                        </svg>
+                        Full Report
+                    </button>
                     <button class="admin-tab-btn" data-tab="settings">
                         <svg class="icon">
                             <use href="../assets/icons.svg#settings"></use>
@@ -172,6 +178,83 @@
                     </div>
                 </div>
 
+                <!-- Full Report Tab -->
+                <div id="full-report" class="admin-tab-content">
+                    <div class="glass-card report-card">
+                        <div class="report-header">
+                            <div class="report-header-left">
+                                <h2>
+                                    <svg class="icon">
+                                        <use href="../assets/icons.svg#file-text"></use>
+                                    </svg>
+                                    Full System Report
+                                </h2>
+                                <p class="report-subtitle">Comprehensive overview of all users and their activity</p>
+                            </div>
+                            <div class="report-header-actions">
+                                <div class="report-search-wrap">
+                                    <svg class="icon icon-sm">
+                                        <use href="../assets/icons.svg#search"></use>
+                                    </svg>
+                                    <input type="text" id="report-search" class="input report-search-input"
+                                        placeholder="Search users..." autocomplete="new-password" value="">
+                                </div>
+                                <button class="btn btn-outline btn-sm" id="export-report-btn">
+                                    <svg class="icon icon-sm">
+                                        <use href="../assets/icons.svg#download"></use>
+                                    </svg>
+                                    Export CSV
+                                </button>
+                                <button class="btn btn-gradient btn-sm" id="generate-report-btn">
+                                    <svg class="icon icon-sm">
+                                        <use href="../assets/icons.svg#refresh-cw"></use>
+                                    </svg>
+                                    Generate Report
+                                </button>
+                            </div>
+                        </div>
+                        <div class="report-summary" id="report-summary">
+                            <!-- Injected by JS -->
+                        </div>
+                        <div class="admin-table-container report-table-container">
+                            <table class="admin-table report-table" id="report-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Joined</th>
+                                        <th>Syllabi</th>
+                                        <th>Topics</th>
+                                        <th>Verified</th>
+                                        <th>Progress</th>
+                                        <th>Tests</th>
+                                        <th>Passed</th>
+                                        <th>Avg Score</th>
+                                        <th>Streak</th>
+                                        <th>Best Streak</th>
+                                        <th>Last Active</th>
+                                        <th>Finals</th>
+                                        <th>Best Final</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="report-table-body">
+                                    <tr>
+                                        <td colspan="17" class="report-empty-state">
+                                            <svg class="icon spin-animation"
+                                                style="width:2rem;height:2rem;opacity:0.4;">
+                                                <use href="../assets/icons.svg#refresh-cw"></use>
+                                            </svg>
+                                            <p>Loading report data...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Settings Tab -->
                 <div id="settings" class="admin-tab-content">
                     <!-- Settings Section (Same as user settings) -->
@@ -193,7 +276,8 @@
                                         <p class="settings-theme-subtitle" id="theme-subtitle">Light mode is active</p>
                                     </div>
                                 </div>
-                                <div class="settings-theme-toggle" style="display: flex; align-items: center; gap: 0.5rem;">
+                                <div class="settings-theme-toggle"
+                                    style="display: flex; align-items: center; gap: 0.5rem;">
                                     <span class="text-muted-foreground"><svg class="icon">
                                             <use href="../assets/icons.svg#sun"></use>
                                         </svg></span>
@@ -294,6 +378,7 @@
     <script src="../common/config.js"></script>
     <script src="../common/api.js"></script>
     <script src="../common/common.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
     <script src="admin.js"></script>
 </body>
 

@@ -197,6 +197,8 @@ function setupManualEntry() {
     const previewCard = document.getElementById('preview-card');
     const treeEl = document.getElementById('man-tree');
     const badgeEl = document.getElementById('preview-badge');
+    const unitList = document.getElementById('unit-suggestions');
+    const topicList = document.getElementById('topic-suggestions');
 
     const errSyllabus = document.getElementById('err-syllabus-name');
     const errUnit = document.getElementById('err-unit');
@@ -240,6 +242,33 @@ function setupManualEntry() {
         return units.reduce((acc, u) =>
             acc + u.topics.reduce((ta, t) => ta + t.subtopics.length, 0), 0);
     }
+
+    /** Update autocomplete datalist suggestions */
+    function updateSuggestions() {
+        if (!unitList || !topicList) return;
+        
+        const unitNames = new Set();
+        const topicNames = new Set();
+
+        units.forEach(u => {
+            unitNames.add(u.unitName);
+            u.topics.forEach(t => {
+                topicNames.add(t.topicName);
+            });
+        });
+
+        unitList.innerHTML = Array.from(unitNames).map(name => `<option value="${esc(name)}"></option>`).join('');
+        topicList.innerHTML = Array.from(topicNames).map(name => `<option value="${esc(name)}"></option>`).join('');
+    }
+
+    /** Ensure all options are visible on focus */
+    [inpUnit, inpTopic].forEach(inp => {
+        inp.addEventListener('focus', () => {
+            if (inp.value) {
+                inp.select();
+            }
+        });
+    });
 
     /* ── Find-or-create helpers ─────────────────────────────── */
     function findOrCreateUnit(unitName) {
@@ -329,6 +358,7 @@ function setupManualEntry() {
                 units.splice(uIdx, 1);
                 renderTree();
                 updatePreview();
+                updateSuggestions();
             });
         });
 
@@ -349,6 +379,7 @@ function setupManualEntry() {
                 }
                 renderTree();
                 updatePreview();
+                updateSuggestions();
             });
         });
     }
@@ -395,6 +426,7 @@ function setupManualEntry() {
 
         renderTree();
         updatePreview();
+        updateSuggestions();
 
         Toast.show('Added', `Subtopic "${subtopicVal}" added under "${topicVal}"`, 'default');
     });
