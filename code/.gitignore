@@ -38,3 +38,6 @@ Thumbs.db
 # Git backup folders
 .git_backup/
 **/.git_backup/
+
+# Environment files
+.env
